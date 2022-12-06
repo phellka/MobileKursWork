@@ -1,5 +1,6 @@
 package com.example.testapi.service;
 
+import com.example.testapi.entity.Lunch;
 import com.example.testapi.entity.Order;
 import com.example.testapi.reposity.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,15 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public List<Order> findAllOrders(){
-        return (List<Order>) orderRepository.findAll();
+    public List<Order> findAllOrders(String userlogin){
+        List<Order> list =  (List<Order>) orderRepository.findAll();
+        List<Order> retList = new ArrayList<Order>();
+        for(Order order : list){
+            if (Objects.equals(order.getUserlogin(), userlogin)){
+                retList.add(order);
+            }
+        }
+        return retList;
     }
 
     public Order updateOrder(Long id, int calorie, String wishes, String userLogin){

@@ -27,8 +27,8 @@ public class OrderController {
     }
 
     @GetMapping(value = "api/v1/orders/")
-    public List<Order> getOrders() {
-        return orderService.findAllOrders();
+    public List<Order> getOrders(@RequestParam("userlogin") String userlogin) {
+        return orderService.findAllOrders(userlogin);
     }
 
     @PatchMapping("api/v1/orders/{id}")

@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +34,15 @@ public class LunchService {
         return LunchRepository.save(Lunch);
     }
 
-    public List<Lunch> findAllLunchs(){
-        return (List<Lunch>) LunchRepository.findAll();
+    public List<Lunch> findAllLunchs(String userlogin){
+        List<Lunch> list =  (List<Lunch>) LunchRepository.findAll();
+        List<Lunch> retList = new ArrayList<Lunch>();
+        for(Lunch lunch : list){
+            if (Objects.equals(lunch.getUserlogin(), userlogin)){
+                retList.add(lunch);
+            }
+        }
+        return retList;
     }
 
     public Lunch updateLunch(Long id, int price, int weight, String userLogin, Order order){

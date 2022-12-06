@@ -20,25 +20,25 @@ public class CutleryController {
     }
 
     @GetMapping(value = "api/v1/cutlerys/")
-    public List<Cutlery> getCutlerys() {
-        return cutleryService.findAllCutlerys();
+    public List<Cutlery> getCutlerys(@RequestParam("userlogin") String userlogin) {
+        return cutleryService.findAllCutlerys(userlogin);
     }
 
     @PostMapping(value = "api/v1/cutlerys/")
-    public Cutlery createCutlery(@RequestParam("calorie") int calorie,
-                                 @RequestParam("wishes") String wishes,
+    public Cutlery createCutlery(@RequestParam("count") int count,
+                                 @RequestParam("name") String name,
                                  @RequestParam("userlogin") String userlogin,
                                  @RequestParam("orderId") long orderId) {
-        return cutleryService.addCutlery(calorie, wishes, userlogin, orderId);
+        return cutleryService.addCutlery(count, name, userlogin, orderId);
     }
 
     @PatchMapping("api/v1/cutlerys/{id}")
     public Cutlery updateCutlery(@PathVariable Long id,
-                                     @RequestParam("calorie") int calorie,
-                                     @RequestParam("wishes") String wishes,
+                                     @RequestParam("count") int count,
+                                     @RequestParam("name") String name,
                                      @RequestParam("userlogin") String userlogin,
                                      @RequestParam("orderId") long orderId) {
-        return cutleryService.updateCutlery(id, calorie, wishes, userlogin, orderId);
+        return cutleryService.updateCutlery(id, count, name, userlogin, orderId);
     }
 
     @DeleteMapping("api/v1/cutlerys/{id}")

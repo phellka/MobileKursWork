@@ -21,8 +21,8 @@ public class LunchController {
     }
 
     @GetMapping(value = "api/v1/lunch/")
-    public List<Lunch> getLunches() {
-        return lunchService.findAllLunchs();
+    public List<Lunch> getLunches(@RequestParam("userlogin") String userlogin) {
+        return lunchService.findAllLunchs(userlogin);
     }
 
     @PostMapping(value = "api/v1/lunch/")

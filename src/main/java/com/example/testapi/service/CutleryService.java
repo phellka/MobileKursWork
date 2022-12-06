@@ -7,7 +7,9 @@ import com.example.testapi.reposity.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +33,15 @@ public class CutleryService {
         return cutleryRepository.save(Cutlery);
     }
 
-    public List<Cutlery> findAllCutlerys(){
-        return (List<Cutlery>) cutleryRepository.findAll();
+    public List<Cutlery> findAllCutlerys(String userlogin){
+        List<Cutlery> list =  (List<Cutlery>) cutleryRepository.findAll();
+        List<Cutlery> retList = new ArrayList<Cutlery>();
+        for(Cutlery cutlery : list){
+            if (Objects.equals(cutlery.getUserlogin(), userlogin)){
+                retList.add(cutlery);
+            }
+        }
+        return retList;
     }
 
     public Cutlery updateCutlery(Long id, int count, String name, String userLogin, Order order){
