@@ -15,14 +15,19 @@ public class LunchController {
     private final LunchService lunchService;
 
     @GetMapping(value = "api/v1/lunch/{id}")
-    public ResponseEntity<Lunch> getLunchById(@PathVariable Long id) {
-        var lunch = lunchService.getLunch(id);
+    public ResponseEntity<Lunch> getLunchById(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        var lunch = lunchService.getLunch(id, userlogin);
         return ResponseEntity.ok(lunch);
     }
 
     @GetMapping(value = "api/v1/lunch/")
     public List<Lunch> getLunches(@RequestParam("userlogin") String userlogin) {
         return lunchService.findAllLunchs(userlogin);
+    }
+
+    @GetMapping(value = "api/v1/lunch/all/")
+    public List<Lunch> getAllLunches(@RequestParam("userlogin") String userlogin) {
+        return lunchService.findAllUsersLunchs(userlogin);
     }
 
     @PostMapping(value = "api/v1/lunch/")
@@ -43,7 +48,7 @@ public class LunchController {
     }
 
     @DeleteMapping("api/v1/lunch/{id}")
-    public Lunch deleteLunch(@PathVariable Long id) {
-        return lunchService.deleteLunch(id);
+    public Lunch deleteLunch(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        return lunchService.deleteLunch(id, userlogin);
     }
 }

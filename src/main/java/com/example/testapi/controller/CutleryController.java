@@ -14,14 +14,19 @@ public class CutleryController {
     private final CutleryService cutleryService;
 
     @GetMapping(value = "api/v1/cutlerys/{id}")
-    public ResponseEntity<Cutlery> getCutleryById(@PathVariable Long id) {
-        var Cutlery = cutleryService.getCutlery(id);
+    public ResponseEntity<Cutlery> getCutleryById(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        var Cutlery = cutleryService.getCutlery(id, userlogin);
         return ResponseEntity.ok(Cutlery);
     }
 
     @GetMapping(value = "api/v1/cutlerys/")
     public List<Cutlery> getCutlerys(@RequestParam("userlogin") String userlogin) {
         return cutleryService.findAllCutlerys(userlogin);
+    }
+
+    @GetMapping(value = "api/v1/cutlerys/all/")
+    public List<Cutlery> getAllCutlerys(@RequestParam("userlogin") String userlogin) {
+        return cutleryService.findAllUsersCutlerys(userlogin);
     }
 
     @PostMapping(value = "api/v1/cutlerys/")
@@ -42,7 +47,7 @@ public class CutleryController {
     }
 
     @DeleteMapping("api/v1/cutlerys/{id}")
-    public Cutlery deleteCutlery(@PathVariable Long id) {
-        return cutleryService.deleteCutlery(id);
+    public Cutlery deleteCutlery(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        return cutleryService.deleteCutlery(id, userlogin);
     }
 }

@@ -14,8 +14,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping(value = "api/v1/orders/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        var order = orderService.getOrder(id);
+    public ResponseEntity<Order> getOrderById(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        var order = orderService.getOrder(id, userlogin);
         return ResponseEntity.ok(order);
     }
 
@@ -31,6 +31,11 @@ public class OrderController {
         return orderService.findAllOrders(userlogin);
     }
 
+    @GetMapping(value = "api/v1/orders/all/")
+    public List<Order> getAllOrders(@RequestParam("userlogin") String userlogin) {
+        return orderService.findAllUsersOrders(userlogin);
+    }
+
     @PatchMapping("api/v1/orders/{id}")
     public Order updateQualification(@PathVariable Long id,
                                      @RequestParam("calorie") int calorie,
@@ -40,7 +45,7 @@ public class OrderController {
     }
 
     @DeleteMapping("api/v1/orders/{id}")
-    public Order deleteQualification(@PathVariable Long id) {
-        return orderService.deleteOrder(id);
+    public Order deleteQualification(@PathVariable Long id, @RequestParam("userlogin") String userlogin) {
+        return orderService.deleteOrder(id, userlogin);
     }
 }

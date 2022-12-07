@@ -15,6 +15,7 @@ public class User {
     private Long id;
     private String login;
     private String password;
+    private String role;
 
     public User(){
 
@@ -23,5 +24,6 @@ public class User {
     public User(String login, String password){
         this.login = login;
         this.password = password;
+        this.role = "user";
     }
 }

@@ -16,10 +16,23 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserDto getUser(Long userId) {
-        var user = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalArgumentException(String.format("User with id=%s not found", userId)));
-        return map(user);
-
+        try {
+            var user = userRepository.findById(userId).orElseThrow(
+                    () -> new IllegalArgumentException(String.format("User with id=%s not found", userId)));
+            return map(user);
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
+    public UserDto getUser(String login){
+        List<UserDto> list = findAllUsers();
+        for (UserDto userDto : list){
+            if (Objects.equals(userDto.getLogin(), login)){
+                return userDto;
+            }
+        }
+        return null;
     }
 
     public UserDto addUser(String login, String password){
@@ -63,6 +76,7 @@ public class UserService {
         return UserDto.builder()
                 .login(entity.getLogin())
                 .response(true)
+                .role(entity.getRole())
                 .build();
     }
 }
